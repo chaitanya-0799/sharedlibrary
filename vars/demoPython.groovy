@@ -19,7 +19,7 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
             }
             stage('Build'){
                 steps {
-                    sh "docker build -t ${dockerImage} -f build/Dockerfile ."
+                    sh "docker build -t ${dockerImage}:${dockerTag} -f build/Dockerfile ."
                 }
             }
 
