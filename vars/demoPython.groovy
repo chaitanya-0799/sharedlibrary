@@ -18,13 +18,14 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
         }
         stage('Build'){
             steps {
-                sh 'docker build -t "${dockerImage}" -f build/Dockerfile .'
+                sh "docker build -t ${dockerImage} -f build/Dockerfile ."
             }
         }
 
         stage('push') {
             steps {
-                withCredentials([usernameColonPassword(credentialsId: 'dockerCred', variable: '')]) {
+                withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
+                    sh "docker push ${dockerImage}:${dockerTag}"
                 }
             }
         }
@@ -32,9 +33,9 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
         
         stage('Deploy') {
             steps {
-                sh 'docker stop "${containerName}" || true'
-                sh 'docker rm "${containerName}" || true'
-                sh 'docker run -itdp 800:5000 --name "${containerName}" "${dockerImage}:${dockerTag}"'
+                sh "docker stop ${containerName} || true"
+                sh "docker rm ${containerName} || true"
+                sh "docker run -itdp 800:5000 --name ${containerName} ${dockerImage}:${dockerTag}"
             }
         }
     }
