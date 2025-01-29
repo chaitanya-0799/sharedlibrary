@@ -1,4 +1,4 @@
-def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a', String dockerImage = 'a', String dockerTag = 'a', String containerName = 'a') {
+def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a', String dockerImage = 'a', String docTag = 'a', String containerName = 'a') {
 
     
     pipeline {
@@ -7,7 +7,7 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
         githubURL =  "${githubURL}"
         gitBranch = "${gitBranch}"
         dockerImage = "${dockerImage}"
-        dockerTag = "${dockerTag}${BUILD_NUMBER}" 
+        dockerTag = "${docTag}${BUILD_NUMBER}" 
         containerName = "${containerName}"
     }
         agent any
