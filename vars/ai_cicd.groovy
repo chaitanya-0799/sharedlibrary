@@ -1,5 +1,9 @@
 def call( String dockerCred, String githubURL, String gitBranch, String dockerfilePath, 
           String dockerImage, String docTag, String containerName, String containerPort, String applicationPort ) {
+    // Parameter validation
+    if (!dockerCred || !githubURL || !gitBranch || !dockerfilePath || !dockerImage || !docTag || !containerName || !containerPort || !applicationPort) {
+        error "Missing required parameters"
+    }
 
     pipeline {
         environment {
