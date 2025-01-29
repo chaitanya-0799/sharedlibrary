@@ -38,7 +38,7 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
                 steps {
                     sh "docker stop ${containerName} || true"
                     sh "docker rm ${containerName} || true"
-                    sh "docker run -itdp ${contPort}:${applicationPort} --name ${containerName} ${dockerImage}:${dockerTag}"
+                    sh "docker run -itdp ${contPort}:${appPort} --name ${containerName} ${dockerImage}:${dockerTag}"
                 }
             }
         }
