@@ -1,4 +1,4 @@
-def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a', String dockerImage = 'a', String docTag = 'a', String containerName = 'a') {
+def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a', String dockerImage = 'a', String docTag = 'a', String containerName = 'a', String containerPort = 'a', String applicationPort = 'a' ) {
 
     
     pipeline {
@@ -9,6 +9,8 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
         dockerImage = "${dockerImage}"
         dockerTag = "${docTag}${BUILD_NUMBER}" 
         containerName = "${containerName}"
+        contPort = "${containerPort}"
+        appPort = "${applicationPort}"
     }
         agent any
         stages {
@@ -36,7 +38,7 @@ def call( String dockerCred = 'a' ,String githubURL = 'a', String gitBranch = 'a
                 steps {
                     sh "docker stop ${containerName} || true"
                     sh "docker rm ${containerName} || true"
-                    sh "docker run -itdp 800:5000 --name ${containerName} ${dockerImage}:${dockerTag}"
+                    sh "docker run -itdp ${contPort}:${applicationPort} --name ${containerName} ${dockerImage}:${dockerTag}"
                 }
             }
         }
